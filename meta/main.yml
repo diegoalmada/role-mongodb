@@ -1,0 +1,16 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Diego Almada
+  description: An Ansible Role created that be inspired Phansible, with the few changes.
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty
+  categories:
+    - database
+    - database:nosql
