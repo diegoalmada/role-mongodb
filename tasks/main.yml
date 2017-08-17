@@ -1,16 +1,19 @@
 ---
-- name: Add MongoDB public GPC Key
-  apt_key: url=hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 
-- name: Add MongoDB stable repository (Ubuntu)
-  apt_repository: repo="deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-  when: ansible_distribution == "Ubuntu" 
+- name: Include variables
+  include_vars = "main.yml"
 
-- name: run the equivalent of "apt-get update" as a separate step
-  apt: update_cache=yes
+- name: Add keys
+  apt_key: 
+    keyserver: "{{ url_apt_key }}"
+    id: "{{ id_apt_key }}"
 
-- name: MongoDB | Install latest MongoDB release
-  apt: name=mongodb-org state=present force=yes
+- name: Add sources
+  apt_repository: repo='{{ mongodb_repository }}' update_cache='yes'
+
+- name: Debian | Install Packages
+  apt: pkg={{ item }} state=installed force=yes
+  with_items: "{{ mongodb_packages }}"  
 
 - name: MongoDB | Create default configuration template
   template:
