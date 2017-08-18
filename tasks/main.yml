@@ -1,19 +1,18 @@
 ---
-
 - name: Include variables
-  include_vars = "main.yml"
+  include_vars: "main.yml"
 
 - name: Add keys authenticity
   apt_key:
     keyserver: "{{ url_apt_key }}"
     id: "{{ id_apt_key }}"
 
-- name: Debian | Add source sources
+- name: Ubuntu | Add source sources
   apt_repository: repo='{{ mongodb_repository }}' update_cache=yes
 
-- name: Debian | Install Packages
-  apt: pkg={{ item }} state=installed force=yes
-  with_items: "{{ mongodb_packages }}" 
+- name: Ubuntu | Install Packages
+  apt: pkg={{ item }} update_cache=yes
+  with_items: "{{ mongodb_packages }}"
 
 - name: MongoDB | Create default configuration template
   template:
@@ -21,7 +20,4 @@
     dest=/etc/mongodb.conf
     owner=root group=root mode=0644
   notify:
-    - mongodb-restart
-
-- name: MongoDB | Insure deamon is running correctly
-  service: name=mongodb state=started
+    - restart mongod

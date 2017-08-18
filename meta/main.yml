@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Diego Almada
-  description: An Ansible Role created that be inspired Phansible, with the few changes.
+  description: An Ansible Role created to MongoDB
   min_ansible_version: 1.9
   platforms:
   - name: Ubuntu
